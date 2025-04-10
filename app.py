@@ -1,41 +1,44 @@
-import os
-from flask import Flask, request
 import requests
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
 
-app = Flask(__name__)
+# Твій API-ключ RemOnline
+API_KEY = "6a7e537e388f41659b5e18ae4415ffb1"
 
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-REM_API_KEY = os.getenv('REM_API_KEY')
+# Функція для отримання балансу через API RemOnline
+def get_balance():
+    url = "https://api.remonline.com/v1/accounts/balance"  # Заміни на реальний URL API RemOnline (якщо він відрізняється)
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",  # Передаємо API-ключ у заголовку
+    }
+    
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()  # Перевіряє, чи немає помилок у відповіді
+        data = response.json()  # Отримуємо JSON-дані з відповіді
+        
+        # Припускаємо, що відповідь має вигляд:
+        # { "balance": 1000 }
+        return data.get("balance", 0)  # Повертаємо баланс або 0, якщо не знайдено
+    except requests.exceptions.RequestException as e:
+        print(f"Помилка при запиті до API: {e}")
+        return 0
 
-@app.route('/')
-def hello():
-    return "Hello, world!"
+# Функція, яка викликається на команду /balance
+def balance(update: Update, context: CallbackContext):
+    balance = get_balance()  # Викликаємо функцію для отримання балансу
+    update.message.reply_text(f"Ваш баланс: {balance} грн")
 
-@app.route(f'/{TELEGRAM_TOKEN}', methods=['POST'])
-def webhook():
-    update = request.get_json()
+def main():
+    # Твій токен бота
+    updater = Updater("7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc", use_context=True)
 
-    if 'message' in update:
-        chat_id = update['message']['chat']['id']
-        message = update['message']['text']
+    # Додавання команд
+    updater.dispatcher.add_handler(CommandHandler("balance", balance))
 
-        if message == '/balance':
-            balance = get_balance_from_remonline()
-            send_message(chat_id, f'Your balance: {balance}')
-
-    return 'OK', 200
-
-def get_balance_from_remonline():
-    url = "https://api.remonline.com/v1/client/balance"
-    headers = {'Authorization': f'Bearer {REM_API_KEY}'}
-    response = requests.get(url, headers=headers)
-    data = response.json()
-    return data.get('balance', 0)
-
-def send_message(chat_id, text):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    params = {'chat_id': chat_id, 'text': text}
-    requests.get(url, params=params)
+    # Запуск бота
+    updater.start_polling()
+    updater.idle()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    main()
