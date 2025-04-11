@@ -1,11 +1,7 @@
 import requests
-from telegram import Update
-from telegram.ext import Application, CommandHandler
 
-# Твій API-ключ RemOnline
-API_KEY = "ffdcb6e1038f410f9c56e234925e5940"  # Замініть на ваш справжній ключ
+API_KEY = "ffdcb6e1038f410f9c56e234925e5940"  # Ваш ключ API
 
-# Функція для отримання балансу через API RemOnline
 def get_balance():
     url = "https://api.remonline.com/v1/accounts/balance"
     headers = {
@@ -14,12 +10,14 @@ def get_balance():
 
     try:
         response = requests.get(url, headers=headers)
-        response.raise_for_status()  # Якщо є помилка, буде виключення
+        response.raise_for_status()
         data = response.json()
+        print(data)  # Додамо виведення даних для перевірки
         return data.get("balance", 0)
     except requests.exceptions.RequestException as e:
         print(f"Помилка при запиті до API: {e}")
         return 0
+
 
 # Функція для обробки команди /balance
 async def balance(update: Update, context):
