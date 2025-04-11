@@ -1,6 +1,6 @@
 import requests
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.ext import Application, CommandHandler
 
 # Твій API-ключ RemOnline
 API_KEY = "ffdcb6e1038f410f9c56e234925e5940"
@@ -25,16 +25,15 @@ def get_balance():
         return 0
 
 # Функція, яка викликається на команду /balance
-async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def balance(update: Update, context):
     balance = get_balance()  # Викликаємо функцію для отримання балансу
     await update.message.reply_text(f"Ваш баланс: {balance} грн")
 
-def main() -> None:
-    """Запуск бота."""
+def main():
     # Твій токен бота
     application = Application.builder().token("7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc").build()
 
-    # Додавання команд до бота
+    # Додавання команд
     application.add_handler(CommandHandler("balance", balance))
 
     # Запуск бота
