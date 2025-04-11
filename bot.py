@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.ext import Application, CommandHandler, CallbackContext
 import requests
 
 def get_balance():
@@ -18,16 +18,8 @@ def get_balance():
         print(f"Помилка при запиті до API: {e}")
         return 0
 
-def balance(update: Update, context: CallbackContext):
+async def balance(update: Update, context: CallbackContext):
     balance = get_balance()
-    update.message.reply_text(f"Ваш баланс: {balance} грн")
+    await update.message.reply_text(f"Ваш баланс: {balance} грн")
 
-def main():
-    updater = Updater("7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc", use_context=True)
-    updater.dispatcher.add_handler(CommandHandler("balance", balance))
-    updater.start_polling()
-    print("Bot is running...")
-    updater.idle()
-
-if __name__ == '__main__':
-    main()
+def
