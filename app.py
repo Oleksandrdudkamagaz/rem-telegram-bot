@@ -26,7 +26,7 @@ async def balance(update: Update, context):
 
 def main():
     # Створення додатку
-    application = Application.builder().token("7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc").build()  # Замініть на ваш токен
+    application = Application.builder().token("8157954971:AAGx0JcArobM0vb7SzZSCiGiEIwL6yrHsQk").build()  # Замініть на ваш токен
 
     # Додавання обробника для команди /balance
     application.add_handler(CommandHandler("balance", balance))
