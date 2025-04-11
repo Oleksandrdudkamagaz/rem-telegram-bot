@@ -37,5 +37,4 @@ def main():
     application.run_polling()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)  # Замість 5000 використовуйте 5001
-
+    main()
