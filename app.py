@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
 # Твій API-ключ RemOnline
-API_KEY = "6a7e537e388f41659b5e18ae4415ffb1"
+API_KEY = "ffdcb6e1038f410f9c56e234925e5940"
 
 # Функція для отримання балансу через API RemOnline
 def get_balance():
