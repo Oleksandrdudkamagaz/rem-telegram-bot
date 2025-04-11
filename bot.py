@@ -3,7 +3,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 import requests
 
 def get_balance():
-    API_KEY = "6a7e537e388f41659b5e18ae4415ffb1"
+    API_KEY = "ffdcb6e1038f410f9c56e234925e5940"  # Замінити на правильний ключ
     url = "https://api.remonline.com/v1/accounts/balance"
     headers = {
         "Authorization": f"Bearer {API_KEY}",
