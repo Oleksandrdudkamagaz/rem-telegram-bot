@@ -1,28 +1,25 @@
 from telegram import Update
-from telegram.ext import CommandHandler, Updater
+from telegram.ext import Application, CommandHandler
 
-# Функція для команди /start
-def start(update: Update, context):
-    update.message.reply_text("Hello! I'm your bot.")
+# Обробник для команди /start
+async def start(update: Update, context):
+    await update.message.reply_text('Hello! I\'m your bot.')
 
-# Функція для команди /balance
-def balance(update: Update, context):
-    update.message.reply_text("Your balance is $100.")
-
-def main():
+# Основна функція
+async def main():
+    # Ваш токен
     token = "7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc"
     
-    # Створення об'єкта Updater
-    updater = Updater(token, use_context=False)
-    dp = updater.dispatcher
+    # Створюємо об'єкт Application
+    application = Application.builder().token(token).build()
 
-    # Додавання обробників команд
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("balance", balance))
+    # Додаємо обробник для команди /start
+    application.add_handler(CommandHandler("start", start))
 
-    # Запуск бота
-    updater.start_polling()
-    updater.idle()
+    # Запускаємо бота
+    await application.run_polling()
 
+# Запуск бота
 if __name__ == '__main__':
-    main()
+    import asyncio
+    asyncio.run(main())
