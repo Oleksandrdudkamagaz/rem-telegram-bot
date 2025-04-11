@@ -28,7 +28,7 @@ async def balance(update: Update, context):
     await update.message.reply_text(f"Ваш баланс: {balance} грн")
 
 def main():
-    # Створення додатку
+    # Створення додатку без use_context
     application = Application.builder().token("7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc").build()
 
     # Додавання обробника для команди /balance
