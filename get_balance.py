@@ -7,7 +7,7 @@ REM_ONLINE_API_KEY = 'ffdcb6e1038f410f9c56e234925e5940'
 client_id = '7ca045ee-b85d-427b-92e7-a9aff6f9d13b'
 
 # Формуємо URL для запиту
-url = f'https://api.remonline.com/v1/clients/{client_id}/balance'
+url = f'https://api.remonline.app/v1/clients/{client_id}/balance'
 
 # Встановлюємо заголовок з API ключем
 headers = {
