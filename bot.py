@@ -22,4 +22,15 @@ async def balance(update: Update, context: CallbackContext):
     balance = get_balance()
     await update.message.reply_text(f"Ваш баланс: {balance} грн")
 
-def
+def main():
+    # Оновлений код для створення бота:
+    application = Application.builder().token("7775775049:AAEWIkhx2zhYOk23EJQO8nRHHQ6a_hBl6Rc").build()
+    
+    # Додавання обробника для команди /balance:
+    application.add_handler(CommandHandler("balance", balance))
+    
+    # Запуск бота
+    application.run_polling()
+
+if __name__ == '__main__':
+    main()
